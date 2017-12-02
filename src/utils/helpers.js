@@ -34,8 +34,8 @@ const imageSearcher = function(desc){
 }
 
 const descriptionCleaner = function(desc){
-  let cleansedDesc = desc.replace(/<[^>]*/g, "");
-  let maxLength = 120;
+  let cleansedDesc = desc.replace(/<(?:.|\n)*?>/gm, '');
+  let maxLength = 150;
   let trimmedDesc = cleansedDesc.substring(0, maxLength);
 
   return trimmedDesc;

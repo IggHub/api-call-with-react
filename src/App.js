@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Button, ButtonToolbar, Image} from 'react-bootstrap';
+import {Grid, Row, Col, Thumbnail, Image} from 'react-bootstrap';
+import './App.css';
 
 //add this and refactor later
 //import getRSS from './utils/client';
@@ -41,24 +42,30 @@ class App extends Component {
       return <div>Waiting...</div>
     }
     const mediumPostItems = this.state.axiosResponse.items.filter(el => el.categories.length > 0);
-    console.log(mediumPostItems[2]);
+    console.log(mediumPostItems[0]);
     return (
-      <div>
-        <h1 className="App-title">{this.state.axiosResponse.feed.url}</h1>
-        {mediumPostItems.map((post, index) =>
-          <div key={index}>
-            <div><Image src={mediumHelper.imageSearcher(post.description)} width="300px" height="200px" rounded /></div>
-            <div>{post.title}</div>
-            <div>By {post.author}</div>
-            <div>{mediumHelper.humanReadableDate(post.pubDate)}</div>
-            <div>{mediumHelper.descriptionCleaner(post.description)}</div>
-          </div>
-        )}
-        <ButtonToolbar>
-          <Button bsStyle="primary" bsSize="large">Large button</Button>
-          <Button bsSize="large">Large button</Button>
-        </ButtonToolbar>
-      </div>
+      <Grid>
+
+        <Row>
+          {mediumPostItems.map((post, index) =>
+            <Col xs={12} sm={6} md={4} key={index}>
+              <div className="card">
+                <div>
+                  <Image src={mediumHelper.imageSearcher(post.description)} width="360px" height="240px" responsive />
+                </div>
+                <div className="card-content-wrapper">
+                  <h3>{post.title.length > 20 ? post.title.substring(0, 20) + "..." : post.title}</h3>
+                  <h6 className="card-author">By {post.author}</h6>
+                  <div className="card-date">
+                    {mediumHelper.humanReadableDate(post.pubDate)}
+                  </div>
+                  <p className="card-description">{mediumHelper.descriptionCleaner(post.description)}...</p>
+                </div>
+              </div>
+            </Col>
+          )}
+        </Row>
+      </Grid>
     );
   }
 }
