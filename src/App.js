@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import getRSS from './utils/client';
 
 var data = {rss_url: 'https://medium.com/feed/@stupendous_igg'}
 
@@ -24,7 +25,7 @@ class App extends Component {
             axiosResponse: response.data,
             isLoading: false
           })
-        }, 1500); 
+        }, 1500);
       })
       .catch(function (error) {
         console.log(error);
